@@ -20,7 +20,6 @@ function randomDegrees(){
 function appendCard(resObj){
     let newDiv = document.createElement('div');
     zIndexCount++;
-    
     newDiv.style.zIndex = zIndexCount;
     newDiv.style.transform = `rotate(${randomDegrees()}deg)`
     newDiv.innerHTML = `<div class="card-image">
@@ -30,25 +29,19 @@ function appendCard(resObj){
 };
 
 
-containerButton.addEventListener('click', function(e){
+containerButton.addEventListener('click', async function(e){
 
-    // console.log(e.target);
     if (e.target.id == 'new-deck'){
-        axios.get(baseUrl+'new/shuffle/')
-        .then(res => {
-            let deckId = res.data.deck_id;
-            e.target.parentElement.innerHTML = `<button id='card-button' class="btn btn-dark btn-md btn-block my-4 card-button" deck_id="${deckId}">Give me a new card</button>`;
-        })
+        let response = await axios.get(baseUrl+'new/shuffle/')
+        let deckId = response.data.deck_id;
+        e.target.parentElement.innerHTML = `<button id='card-button' class="btn btn-dark btn-md btn-block my-4 card-button" deck_id="${deckId}">Give me a new card</button>`;
     }
 
     else if (e.target.id == 'card-button'){
         let deckID = e.target.getAttribute('deck_id');
-        axios.get(baseUrl+deckID+'/draw')
-        .then(res => {
-            appendCard(res.data)
-        })
+        let response = await axios.get(baseUrl+deckID+'/draw')
+        appendCard(response.data)
     }
 });
 
-// Using Async and await
 

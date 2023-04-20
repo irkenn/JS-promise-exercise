@@ -1,0 +1,16 @@
+body{
+    background-color: rgb(73, 135, 37);
+
+}
+
+div.card-image{
+    display: flex;
+    align-content: center;
+    position: absolute;
+    left: 50%;
+}
+
+img{
+    margin-left: -113px;
+    margin-top:50%;
+}
